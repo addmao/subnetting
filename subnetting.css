@@ -1,0 +1,18 @@
+span-head {
+  font-family: 'Ubuntu';
+	font-weight: bold;
+}
+
+span-value {
+  font-family: 'Ubuntu';
+	font-weight: normal;
+	color: #d50000;
+}
+
+span-input, input {
+	font-family: ' Spectral SC';
+}
+
+table, th, td {
+    border: 1px solid black;
+}

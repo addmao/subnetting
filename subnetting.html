@@ -1,0 +1,637 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Subnetting</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="common.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="subnetting.css">
+</head>
+
+<img src="https://pirun.ku.ac.th/~b5810504388/under_construction.png"></img>
+
+<h1>This is IP Address Subnetting Calculator</h1>
+
+<span-head>---------------------------------------------------------------------- </span-head>
+
+<br></br>
+<span-input style="font-size:40px"> Network Class : </span-input>
+<td><label for="cclass0"><input type="radio" name="cclass" id="cclass0" value="any" onClick="selectAny();"/>Any</label>
+	&nbsp; <label for="cclass1"><input type="radio" name="cclass" id="cclass1" value="a" onClick="selectA();"/>A</label>
+	&nbsp; <label for="cclass2"><input type="radio" name="cclass" id="cclass2" value="b" onClick="selectB();"/>B</label>
+	&nbsp; <label for="cclass3"><input type="radio" name="cclass" id="cclass3" value="c" onClick="selectC();"/>C</label></td>
+
+<br></br>
+
+<span-input style="font-size:40px"><form action>IP Address : <input type="text" id="ip_address1" maxlength="3" style="width:30px" style="font-size:40px"> . <input type="text" id="ip_address2" maxlength="3" style="width:30px"> . <input type="text" id="ip_address3" maxlength="3" style="width:30px"> . <input type="text" id="ip_address4" maxlength="3" style="width:30px"></input></form></span-input>
+
+<span-input style="font-size:40px"> Subnet Select : </span-input>
+<td><select name="csubnet" id="csubnet"><!--onChange="return setSubnetV(this.value);"-->
+<!--<option value="255.255.255.255 /32" name="subnet32" id="subnet32">255.255.255.255 /32</option>
+<option value="255.255.255.254 /31" name="subnet31" id="subnet31">255.255.255.254 /31</option>
+<option value="255.255.255.252 /30" name="subnet30" id="subnet30">255.255.255.252 /30</option>
+<option value="255.255.255.248 /29" name="subnet29" id="subnet29">255.255.255.248 /29</option>
+<option value="255.255.255.240 /28" name="subnet28" id="subnet28">255.255.255.240 /28</option>
+<option value="255.255.255.224 /27" name="subnet27" id="subnet27">255.255.255.224 /27</option>
+<option value="255.255.255.192 /26" name="subnet26" id="subnet26">255.255.255.192 /26</option>
+<option value="255.255.255.128 /25" name="subnet25" id="subnet25">255.255.255.128 /25</option>
+<option value="255.255.255.0 /24" name="subnet24" id="subnet24">255.255.255.0 /24</option>
+<option value="255.255.254.0 /23" name="subnet23" id="subnet23">255.255.254.0 /23</option>
+<option value="255.255.252.0 /22" name="subnet22" id="subnet22">255.255.252.0 /22</option>
+<option value="255.255.248.0 /21" name="subnet21" id="subnet21">255.255.248.0 /21</option>
+<option value="255.255.240.0 /20" name="subnet20" id="subnet20">255.255.240.0 /20</option>
+<option value="255.255.224.0 /19" name="subnet19" id="subnet19">255.255.224.0 /19</option>
+<option value="255.255.192.0 /18" name="subnet18" id="subnet18">255.255.192.0 /18</option>
+<option value="255.255.128.0 /17" name="subnet17" id="subnet17">255.255.128.0 /17</option>
+<option value="255.255.0.0 /16" name="subnet16" id="subnet16">255.255.0.0 /16</option>
+<option value="255.254.0.0 /15" name="subnet15" id="subnet15">255.254.0.0 /15</option>
+<option value="255.252.0.0 /14" name="subnet14" id="subnet14">255.252.0.0 /14</option>
+<option value="255.248.0.0 /13" name="subnet13" id="subnet13">255.248.0.0 /13</option>
+<option value="255.240.0.0 /12" name="subnet12" id="subnet12">255.240.0.0 /12</option>
+<option value="255.224.0.0 /11" name="subnet11" id="subnet11">255.224.0.0 /11</option>
+<option value="255.192.0.0 /10" name="subnet10" id="subnet10">255.192.0.0 /10</option>
+<option value="255.128.0.0 /9" name="subnet9" id="subnet9">255.128.0.0 /9</option>
+<option value="255.0.0.0 /8" name="subnet8" id="subnet8">255.0.0.0 /8</option>
+<option value="254.0.0.0 /7" name="subnet7" id="subnet7">254.0.0.0 /7</option>
+<option value="252.0.0.0 /6" name="subnet6" id="subnet6">252.0.0.0 /6</option>
+<option value="248.0.0.0 /5" name="subnet5" id="subnet5">248.0.0.0 /5</option>
+<option value="240.0.0.0 /4" name="subnet4" id="subnet4">240.0.0.0 /4</option>
+<option value="224.0.0.0 /3" name="subnet3" id="subnet3">224.0.0.0 /3</option>
+<option value="192.0.0.0 /2" name="subnet2" id="subnet2">192.0.0.0 /2</option>
+<option value="128.0.0.0 /1" name="subnet1" id="subnet1">128.0.0.0 /1</option>-->
+</select></td>
+
+
+<div>
+<span-head style="font-size:40px"> Test Class :
+<span-value id="class_display" style="font-size:40px"></span-value>
+</span-head>
+</div>
+
+<br></br>
+<br></br>
+
+<input type="submit" onClick="activateResult();" value="Calculate"></input>
+<br></br>
+<br></br>
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> IP Address :
+<span-value id="ip_address_full_display" style="font-size:40px; height=200px;"></span-value>
+</span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Network Address :
+<span-value id="network_address_display" style="font-size:40px"></span-value>
+</span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Broadcast Address :
+<span-value id="broadcast_address_display" style="font-size:40px"></span-value>
+</span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Usable Host IP Range : <span-value id="usable_host_range_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> All Number of Hosts : <span-value id="all_host_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Number of Usable Hosts : <span-value id="usable_host_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px" color=""> Subnet Mask : <span-value id="subnet_mask_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px" color=""> Wildcard Mask : <span-value id="wildcard_mask_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Binary Subnet Mask : <span-value id="binary_subnet_mask_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> IP Class : <span-value id="ip_class_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> CIDR Notation : <span-value id="cidr_notation_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> IP Type : <i><span-value id="ip_type_display" style="font-size:40px"></span-value></i></span-head>
+</div>
+
+<br></br>
+<h1>*********************************************************************** </h1>
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Short : <span-value id="short_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Binary ID : <span-value id="binary_ID_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Integer ID : <span-value id="integerID_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+<div>
+<span-head style="font-size:40px"> Hex ID : <span-value id="hexa_ID_display" style="font-size:40px"></span-value></span-head>
+</div>
+
+<br></br>
+
+
+<h1>$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ </h1>
+
+
+<span style="font-size:40px"><span id="displayResult"></span></span>
+<span style="font-size:40px">
+<table style="width: 100%">
+	<tr>
+		<th> Test </th>
+	</tr>
+
+	<tr>
+		<td> toast </td>
+	</tr>
+</table>
+</span>
+
+<div>
+<span style="font-size:20px"> กลับบ้าน   <font size="2"><strong><a href="https://pirun.ku.ac.th/~b5810504388/"> CLICK! </a></strong></font></span>
+</div>
+
+<!--End Display-->
+
+<!--Copyright Scripts which display below has been retrieve by me from http://www.calculator.net/ip-subnet-calculator.html-->
+
+<script>
+
+//csubnet = '15'
+
+//function loadSubnetOption(subnet) {
+	//return Array(subnet).fill().map((subnet, 32-subnet));
+//}
+
+//console.log("eiei");
+
+//function selectAny() {
+	//if(document.getElementById('cclass0').checked) {
+		/*document.getElementById("subnetA").value.display = 'none';
+		document.getElementById("subnetB").value.display = 'none';
+		document.getElementById("subnetC").value.display = 'none';*/
+//}
+
+/*function selectButton() {
+	if(document.getElementById("cclass1").checked) {
+		document.getElementById("csubnet").options[0] = null;
+		document.getElementById("class_display").innerHTML = "test";
+	}
+
+	if(document.getElementById("cclass2").checked) {
+		document.getElementById("csubnet").options[1] = null;
+	}
+
+
+	if(document.getElementById("cclass3").checked) {
+		document.getElementById("csubnet").options[2] = null;
+	}
+}*/
+var subnet = [[32, '255.255.255.255'], [31, '255.255.255.254'], [30, '255.255.255.252'], [29, '255.255.255.248'], [28, '255.255.255.240'], [27, '255.255.255.224'], [26, '255.255.255.192'], [25, '255.255.255.128'], [24, '255.255.255.0'], [23, '255.255.254.0'], [22, '255.255.252.0'], [21, '255.255.248.0'], [20, '255.255.240.0'], [19, '255.255.224.0'], [18, '255.255.192.0'], [17, '255.255.128.0'], [16, '255.255.0.0 '], [15, '255.254.0.0'], [14, '255.252.0.0'], [13, '255.248.0.0'], [12, '255.240.0.0'], [11, '255.224.0.0'], [10, '255.192.0.0'], [9, '255.128.0.0'], [8, '255.0.0.0'], [7, '254.0.0.0'], [6, '252.0.0.0'], [5, '248.0.0.0'], [4, '240.0.0.0'], [3, '224.0.0.0'], [2, '192.0.0.0'], [1, '128.0.0.0']];
+
+var cidr_notation =  [[32, '/32'], [31, '/31'], [30, '/30'], [29, '/29'], [28, '/28'], [27, '/27'], [26, '/26'], [25, '/25'], [24, '/24'], [23, '/23'], [22, '/22'], [21, '/21'], [20, '/20'], [19, '/19'], [18, '/18'], [17, '/17'], [16, '/16'], [15, '/15'], [14, '/14'], [13, '/13'], [12, '/12'], [11, '/11'], [10, '/10'], [9, '/9'], [8, '/8'], [7, '/7'], [6, '/6'], [5, '/5'], [4, '/4'], [3, '/3'], [2, '/2'], [1, '/1']];
+
+displayDefaultSubnet();
+
+
+function displayDefaultSubnet() {
+	var optionSelect = "";
+
+	for (var i = 0; i < 32; i++) {
+		optionSelect += "<option value=" + subnet[i][1] +  cidr_notation[i][1] + "> " + subnet[i][1] + " " + cidr_notation[i][1] + " </option>";
+	}
+
+	document.getElementById("csubnet").innerHTML = optionSelect;
+}
+
+
+function selectAny() {
+	var optionSelect = "";
+
+	for (var i = 0; i < 32; i++) {
+		optionSelect += "<option value=" + subnet[i][1] + cidr_notation[i][1] + "> " + subnet[i][1] + " " + cidr_notation[i][1] + " </option>";
+	}
+
+	document.getElementById("csubnet").innerHTML = optionSelect;
+}
+
+function selectA() {
+	var optionSelect = "";
+
+	for (var i = 0; i <= 24; i++) {
+		optionSelect += "<option value=" + subnet[i][1] + cidr_notation[i][1] + cidr_notation[i][1] + "> " + subnet[i][1] + " " + cidr_notation[i][1] + " </option>";
+	}
+
+	document.getElementById("csubnet").innerHTML = optionSelect;
+}
+
+function selectB() {
+	var optionSelect = "";
+
+	for (var i = 0; i <= 16; i++) {
+		optionSelect += "<option value=" + subnet[i][1] + cidr_notation[i][1] + "> " + subnet[i][1] + " " + cidr_notation[i][1] + " </option>";
+	}
+
+	document.getElementById("csubnet").innerHTML = optionSelect;
+}
+
+
+function selectC() {
+	var optionSelect = "";
+
+	for (var i = 0; i <= 8; i++) {
+		optionSelect += "<option value=" + subnet[i][1] + cidr_notation[i][1] + "> " + subnet[i][1] + " " + cidr_notation[i][1] + " </option>";
+	}
+
+	document.getElementById("csubnet").innerHTML = optionSelect;
+}
+
+function cutSubnetUsingDelimiter(ID, position, delimiter) {
+	//var address = id;
+	//var delim = delimiter;
+	//var pos = position;
+	//id = id.toString();
+	//var ip;
+	var ip;// = document.getElementById("csubnet").innerHTML;
+	ip = ID.split(delimiter);
+	var result = ip[position];
+
+
+	//if(position == 3) {
+	//	cutSubnetUsingDelimiter(id, position, delimiter);
+	//}
+	return result;
+	//return result;
+}
+
+//code of "function convertHexToDec" from stackoverflow
+function convertHexToDec(hex) {
+  var result = 0;
+	var digit;
+    hex = hex.toLowerCase();
+
+    for (var i = 0; i < hex.length; i++) {
+        digit = '0123456789abcdefgh'.indexOf(hex[i]);
+        result = result * 16 + digit;
+    }
+
+    return result;
+}
+
+function convertToBinary(decimal) {
+	var result = 0;
+	var rem;
+	var pow = 1;
+	while(decimal != 0) {
+		rem = decimal % 2;
+		decimal /= 2;
+		result = result + (rem * pow);
+		pow = pow * 10;
+	}
+
+	return result;
+}
+
+//"fillZero" function was retrieve from...https://stackoverflow.com/questions/1267283/how-can-i-pad-a-value-with-leading-zeros
+function fillZero(binaryID, width) {
+	width = width - binaryID.toString().length;
+
+	if(width > 0) {
+		return new Array(width + (/\./.test(binaryID)? 2:1)).join('0') + binaryID;
+	}
+
+	return binaryID;
+}
+
+function convertToHexa(decimal) {
+	return (decimal >>> 0).toString(16);
+}
+
+function findSubnetMask(id) {
+	var result = id.split(" ", 1);
+	return result;
+}
+
+function findCIDR(id) {
+	var result = id.split(" ");
+	var tail = result[1];
+	return tail;
+}
+
+
+function find_index(array, string) {
+  var i = 0;
+    
+  for(i=0;i<array.length;i++) {
+    if(array[i]==string) { 
+    	break;
+  	}
+  }
+
+  return array[i] == string ? i : -1;
+}
+
+function calculateWildCardMask(subnet) {
+	var wildcard = 255 - subnet;
+	return wildcard;
+}
+
+function checkIpClass(id) {
+	id = parseInt(id);
+
+	var result = id;
+	var type = typeof(result);
+
+	if(id >= 1 && id <= 126) {
+		result = "A";//A
+	}
+
+	else if(id >= 128 && id <= 191) {
+		result = "B";//B
+	}
+
+	else if(id >= 192 && id <= 223) {
+		result = "C";//C
+	}
+
+	else {
+		result = "";
+	}
+	return result;
+}
+
+function checkIpType(ip_address1) {
+	var isPublic = true;
+
+	if(ip_address1 == 10 || ip_address1 == 172 || ip_address1 == 192) {
+		isPublic = false;
+	}
+
+	return isPublic;
+}
+
+function checkUsableHost(all_host) {
+	var displayUsableHost = true;
+
+	if(all_host < 2) {
+		displayUsableHost = false;
+	}
+
+	return displayUsableHost;
+}
+
+function checkUsableHostRange(network_addr, broadcast_addr) {
+	var flag = true;
+
+	if(network_addr == broadcast_addr) {
+		flag = false;
+	}
+
+	return flag;
+}
+
+function generateTable() {
+
+
+
+
+}
+
+function activateResult() {
+
+	//IP Address
+	var ip_address1 = document.getElementById("ip_address1").value;
+	var ip_address2 = document.getElementById("ip_address2").value;
+	var ip_address3 = document.getElementById("ip_address3").value;
+	var ip_address4 = document.getElementById("ip_address4").value;
+
+	//Subnet Mask
+	var subnet_mask = document.getElementById("csubnet").value;
+	var subnet_inner = document.getElementById("csubnet").innerHTML;
+	var cut_subnet_mask = findSubnetMask(subnet_mask);
+	var subnet_mask1 = cutSubnetUsingDelimiter(subnet_mask, 0, '.');
+	var subnet_mask2 = cutSubnetUsingDelimiter(subnet_mask, 1, '.');
+	var subnet_mask3 = cutSubnetUsingDelimiter(subnet_mask, 2, '.');
+
+	//var subnet_mask4 = cutSubnetUsingDelimiter(cut_subnet_mask, 3, '.');	
+	var subnet_mask3_1 = cutSubnetUsingDelimiter(subnet_mask, 3, '.');
+	var subnet_mask4 = cutSubnetUsingDelimiter(subnet_mask3_1, 0, '/');
+
+
+	var subnet_mask_show_value = subnet_mask1 + "." + subnet_mask2 + "." + subnet_mask3 + "." + subnet_mask4; 
+
+	//Network Address (Subnet Address)
+	var network_address1 = ip_address1 & subnet_mask1;
+	var network_address2 = ip_address2 & subnet_mask2;
+	var network_address3 = ip_address3 & subnet_mask3;
+	var network_address4 = ip_address4 & subnet_mask4;
+
+	var network_address_full = network_address1 + "." + network_address2 + "." + network_address3 + "." + network_address4;
+
+	//Binary Subnet Mask
+	var binary_subnet_mask1 = fillZero(parseInt(subnet_mask1, 10).toString(2), 8);
+	var binary_subnet_mask2 = fillZero(parseInt(subnet_mask2, 10).toString(2), 8);
+	var binary_subnet_mask3 = fillZero(parseInt(subnet_mask3, 10).toString(2), 8);
+	var binary_subnet_mask4 = fillZero(parseInt(subnet_mask4, 10).toString(2), 8);
+
+	var binary_subnet_mask = binary_subnet_mask1 + "." + binary_subnet_mask2 + "." + binary_subnet_mask3 + "." + binary_subnet_mask4
+
+	//Wildcard Mask
+	var wildcard_mask1 = calculateWildCardMask(subnet_mask1);
+	var wildcard_mask2 = calculateWildCardMask(subnet_mask2);
+	var wildcard_mask3 = calculateWildCardMask(subnet_mask3);
+	var wildcard_mask4 = calculateWildCardMask(subnet_mask4);
+
+	var wildcard_mask = wildcard_mask1 + "." + wildcard_mask2 + "." + wildcard_mask3 + "." + wildcard_mask4;
+
+
+	//Broadcast Address
+	var broadcast_address1 = ip_address1 | wildcard_mask1;
+	var broadcast_address2 = ip_address2 | wildcard_mask2;
+	var broadcast_address3 = ip_address3 | wildcard_mask3;
+	var broadcast_address4 = ip_address4 | wildcard_mask4;
+
+	var broadcast_address_full = broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + broadcast_address4;
+
+	//IP Class
+	var ip_class = checkIpClass(ip_address1);
+
+	//CIDR
+	var cidr = cutSubnetUsingDelimiter(subnet_mask, 1, '/');
+
+	//short
+	var short_address = document.getElementById("ip_address4").value;
+
+	//full IP Address with dotted decimal
+	var ip_address_full = ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + ip_address4;
+
+	//Binary ID
+	var binaryID1 = fillZero(parseInt(ip_address1, 10).toString(2), 8);
+	var binaryID2 = fillZero(parseInt(ip_address2, 10).toString(2), 8);
+	var binaryID3 = fillZero(parseInt(ip_address3, 10).toString(2), 8);
+	var binaryID4 = fillZero(parseInt(ip_address4, 10).toString(2), 8);
+
+	var binaryID = binaryID1 + "    " + binaryID2 + "    " + binaryID3 + "   " + binaryID4;
+
+	//Hexadecimal ID
+	var hexaID1 = convertToHexa(ip_address1);
+	var hexaID2 = convertToHexa(ip_address2);
+	var hexaID3 = convertToHexa(ip_address3);
+	var hexaID4 = convertToHexa(ip_address4);
+
+	var hexaID = hexaID1 + hexaID2 + hexaID3 + hexaID4;
+
+	//Integer ID
+	var integerID = convertHexToDec(hexaID);
+
+
+	//Test find All Host using convertion to Decimal
+	//First, convert Network Address
+	var networkAddressHexa1 = convertToHexa(network_address1);
+	var networkAddressHexa2 = convertToHexa(network_address2);
+	var networkAddressHexa3 = convertToHexa(network_address3);
+	var networkAddressHexa4 = convertToHexa(network_address4);
+
+	var networkAddressHexa = networkAddressHexa1 + networkAddressHexa2 + networkAddressHexa3 + networkAddressHexa4;
+
+	var networkAddressInteger = convertHexToDec(networkAddressHexa);
+	//End First
+
+	//Second, convert Broadcast Address
+	var broadcastAddressHexa1 = convertToHexa(broadcast_address1);
+	var broadcastAddressHexa2 = convertToHexa(broadcast_address2);
+	var broadcastAddressHexa3 = convertToHexa(broadcast_address3);
+	var broadcastAddressHexa4 = convertToHexa(broadcast_address4);
+
+	var broadcastAddressHexa = broadcastAddressHexa1 + broadcastAddressHexa2 + broadcastAddressHexa3 + broadcastAddressHexa4;
+
+	var broadcastAddressInteger = convertHexToDec(broadcastAddressHexa);
+	//End Second
+
+	//All Host and Number of Usable Host & Range
+	var number_of_all_host = (broadcastAddressInteger - networkAddressInteger) + 1;
+	var usable_host = checkUsableHost(number_of_all_host);
+
+	//IP type? Public : Private
+	var ip_type = checkIpType(ip_address1);
+
+	//display
+	document.getElementById("displayResult").innerHTML = "All Possible " + "/" + cidr + " Networks for " + ip_address_full + "...";
+
+	//document.getElementById("class_display").innerHTML = cutSubnetUsingDelimiter(subnet_mask, 0, ' ');
+	document.getElementById("class_display").innerHTML = subnet_mask;
+
+	document.getElementById("ip_address_full_display").innerHTML = ip_address_full;
+	document.getElementById("network_address_display").innerHTML = network_address_full;
+	document.getElementById("usable_host_range_display").innerHTML = checkUsableHostRange(network_address_full, broadcast_address_full)? network_address_full + " - " + broadcast_address_full : "N/A";
+	document.getElementById("broadcast_address_display").innerHTML = broadcast_address_full;
+	document.getElementById("all_host_display").innerHTML = number_of_all_host.toLocaleString();
+	document.getElementById("usable_host_display").innerHTML = usable_host? (number_of_all_host-2).toLocaleString() : 0;
+	document.getElementById("subnet_mask_display").innerHTML = subnet_mask_show_value;
+	document.getElementById("binary_subnet_mask_display").innerHTML = binary_subnet_mask;
+	document.getElementById("wildcard_mask_display").innerHTML = wildcard_mask;
+	document.getElementById("cidr_notation_display").innerHTML = "/" + cidr;
+	document.getElementById("ip_class_display").innerHTML = ip_class;
+	document.getElementById("ip_type_display").innerHTML = ip_type? "Public" : "Private";
+	
+	document.getElementById("short_display").innerHTML = ip_address_full + " " + "/" + cidr;
+	document.getElementById("binary_ID_display").innerHTML = binaryID1 + "." + binaryID2 + "." + binaryID3 + "." + binaryID4;
+	document.getElementById("integerID_display").innerHTML = integerID.toLocaleString();
+	document.getElementById("hexa_ID_display").innerHTML = "0x" + hexaID;
+
+}
+
+function setSubnetV(inval){
+	csubnet = inval;
+	return false;
+}
+
+
+//this function retrieve from calculator.org
+function popSubnet(val){
+	var lowerlimit = 0;
+	if (val=='a') {
+		lowerlimit = 8;
+	}
+
+	if (val=='b') {
+		lowerlimit = 16;
+	}
+	if (val=='c') {
+		lowerlimit = 24;
+	}
+
+	var allSubnets = [[32, '255.255.255.255 /32'], [31, '255.255.255.254 /31'], [30, '255.255.255.252 /30'], [29, '255.255.255.248 /29'], [28, '255.255.255.240 /28'], [27, '255.255.255.224 /27'], [26, '255.255.255.192 /26'], [25, '255.255.255.128 /25'], [24, '255.255.255.0 /24'], [23, '255.255.254.0 /23'], [22, '255.255.252.0 /22'], [21, '255.255.248.0 /21'], [20, '255.255.240.0 /20'], [19, '255.255.224.0 /19'], [18, '255.255.192.0 /18'], [17, '255.255.128.0 /17'], [16, '255.255.0.0 /16'], [15, '255.254.0.0 /15'], [14, '255.252.0.0 /14'], [13, '255.248.0.0 /13'], [12, '255.240.0.0 /12'], [11, '255.224.0.0 /11'], [10, '255.192.0.0 /10'], [9, '255.128.0.0 /9'], [8, '255.0.0.0 /8'], [7, '254.0.0.0 /7'], [6, '252.0.0.0 /6'], [5, '248.0.0.0 /5'], [4, '240.0.0.0 /4'], [3, '224.0.0.0 /3'], [2, '192.0.0.0 /2'], [1, '128.0.0.0 /1']];
+	var thisSelect = gObj('csubnet');
+	thisSelect.options.length = 0;
+	for (i = 0; i < allSubnets.length; i++) {
+		if (allSubnets[i][0]>=lowerlimit){
+			var thisOption = document.createElement('option');
+			thisOption.value = allSubnets[i][0];
+			thisOption.innerHTML = allSubnets[i][1];
+
+			if (csubnet==allSubnets[i][0]) {
+				thisOption.selected = true;
+			}
+			thisSelect.appendChild(thisOption);
+		}
+	}
+}
+
+//displaySubnetSelect();
+//displaySubnetSelect('a');
+//popSubnet('a');
+
+
+</script>
+</html>
