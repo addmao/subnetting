@@ -1,6 +1,7 @@
 span-head {
   font-family: 'Ubuntu';
 	font-weight: bold;
+	width: auto;
 }
 
 span-value {
@@ -13,6 +14,7 @@ span-input, input {
 	font-family: ' Spectral SC';
 }
 
-table, th, td {
+table, th, td, tr {
     border: 1px solid black;
+    width: auto;
 }

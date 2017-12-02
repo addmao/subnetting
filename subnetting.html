@@ -12,7 +12,7 @@
 
 <h1>This is IP Address Subnetting Calculator</h1>
 
-<span-head>---------------------------------------------------------------------- </span-head>
+<hr>
 
 <br></br>
 <span-input style="font-size:40px"> Network Class : </span-input>
@@ -27,13 +27,6 @@
 
 <span-input style="font-size:40px"> Subnet Select : </span-input>
 <td><select name="csubnet" id="csubnet"></select></td>
-
-
-<div>
-<span-head style="font-size:40px"> Test Class :
-<span-value id="class_display" style="font-size:40px"></span-value>
-</span-head>
-</div>
 
 <br></br>
 <br></br>
@@ -154,22 +147,19 @@
 <span style="font-size:40px"><span id="all_network_display"></span></span>
 <br></br>
 
-<span style="font-size:40px"><span id="all_display"></span></span>
+<span style="font-size:40px"><span></span></span>
 <br></br>
-<span style="font-size:40px"></span>
 
-<table style="width: 100%">
+<table style="width: 80%">
+
 	<tr value="1">
 		<th> Network Address </th>
 		<th> Usable Host Range </th>
 		<th> Broadcast Address </th>
 	</tr>
 
-	<tr value="2">
-		<td id="first-column"></td>
-		<td id="second-column"> val2 </td>
-		<td id="last-column"> val3 </td>
-	</tr>	
+	<tbody style="font-size:30px" id="all_display" align="center">
+	</tbody>
 
 </table>
 
@@ -491,71 +481,114 @@ function findZero(cidr) {
 	return result;
 }
 
-function generateNetworkRange(ip_address_full, CIDR, number_of_all_host) {
+function findInitialBroadcastAddress(broadcast_address_first, diff) {
+	var result;
+
+	if((broadcast_address_first - diff) < 0) {
+		result = broadcast_address_first;
+	}
+
+	else {
+		while(broadcast_address_first > 0) {
+			broadcast_address_first -= diff;
+
+			if((broadcast_address_first - diff) < 0) {
+				break;
+			}
+		}
+		result = broadcast_address_first;
+
+	}
+	
+	return result;
+}
+
+
+function generateNetworkRange(ip_address_full, CIDR, number_of_all_host, broadcast_address_full) {
 	var ip_address;// = ip_address_full;
+	var broadcast_address;
 	ip_address = cutDot(ip_address_full);
+	broadcast_address = cutDot(broadcast_address_full);
 	var ip_address1 = ip_address[0];
 	var ip_address2 = ip_address[1];
 	var ip_address3 = ip_address[2];
 	var ip_address4 = ip_address[3];
+	var broadcast_address1 = broadcast_address[0];
+	var broadcast_address2 = broadcast_address[1];
+	var broadcast_address3 = broadcast_address[2];
+	var broadcast_address4 = broadcast_address[3];
+
+	var first_broadcast_address;
+	var cal_subnet = 2**(calculateSubnet(CIDR));
 	var cidr_array = [];
 	var result = "";
 	cidr_array[0] = 0;
 
-	var ip_address = ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + ip_address1;
+	//var ip_address = ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + ip_address1;
 	var countZero = findZero(CIDR);
 
-	/*if(CIDR > 24 && CIDR < 32) {
-		for(var i=1, j=0; i<number_of_all_host; i++, j += countZero) {
+	if(CIDR > 24 && CIDR < 32) {
+		for(var i=1, j=0; i<cal_subnet+1; i++, j += countZero) {
 			cidr_array[i-1] = j; 		
 		}
 
-		for(var i=0; cidr_array[i]<255; i++) {
-			result += ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + cidr_array[i] + "<br></br>";
+		var diffSubnet = cidr_array[1] - cidr_array[0];
+		first_broadcast_address = findInitialBroadcastAddress(broadcast_address4, diffSubnet);
+
+		for(var i=0; i<cal_subnet; i++) {
+			result += "<tr> <td>" + ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + cidr_array[i] + "</td> <td>" +
+			ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + (cidr_array[i]+1) + "  -  " + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "</td> <td>" + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "</td> </tr>";
 		}
 	}
 
 	else if(CIDR > 16 && CIDR < 24) {
-		for(var i=1, j=0; i<number_of_all_host; i++, j += countZero) {
+		for(var i=1, j=0; i<cal_subnet+1; i++, j += countZero) {
 			cidr_array[i-1] = j; 		
 		}
 
-		for(var i=0; cidr_array[i]<255; i++) {
-			result += ip_address1 + "." + ip_address2 + "." + cidr_array[i] + "." + "0" + "<br></br>";
-		}
-	}*/
+		var diffSubnet = cidr_array[1] - cidr_array[0];
+		first_broadcast_address = findInitialBroadcastAddress(broadcast_address3, diffSubnet);
 
-	if(CIDR > 8 && CIDR < 16) {
-		for(var i=1, j=0; i<number_of_all_host; i++, j += countZero) {
-			cidr_array[i-1] = j; 		
-		}
-
-		for(var i=0; cidr_array[i]<255; i++) {
-			result += ip_address1 + "." + cidr_array[i] + "." + "0" + "." + "0" + "<br></br>";
+		for(var i=0; i<cal_subnet; i++) {
+			//result += ip_address1 + "." + ip_address2 + "." + cidr_array[i] + "." + "0" + "<br></br>";
+			result += "<tr> <td>" + ip_address1 + "." + ip_address2 + "." + cidr_array[i] + "." + "0" + "</td> <td>" +
+			ip_address1 + "." + ip_address2 + "." + cidr_array[i] + "." + "1" + "  -  " + broadcast_address1 + "." + broadcast_address2 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "." + "254" + "</td> <td>" + broadcast_address1 + "." + broadcast_address2 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "." + broadcast_address4 + "</td> </tr>";
 		}
 	}
 
-	/*else if(CIDR >= 1 && CIDR < 8) {
-		for(var i=1, j=0; i<number_of_all_host; i++, j += countZero) {
+	if(CIDR > 8 && CIDR < 16) {
+		for(var i=1, j=0; i<cal_subnet+1; i++, j += countZero) {
+			cidr_array[i-1] = j; 		
+		}
+
+		var diffSubnet = cidr_array[1] - cidr_array[0];
+		first_broadcast_address = findInitialBroadcastAddress(broadcast_address2, diffSubnet);
+
+		for(var i=0; i<cal_subnet; i++) {
+			//result += ip_address1 + "." + cidr_array[i] + "." + "0" + "." + "0" + "<br></br>";
+			result += "<tr> <td>" + ip_address1 + "." + cidr_array[i] + "." + "0" + "." + "0" + "</td> <td>" +
+			ip_address1 + "." + cidr_array[i] + "." + "0" + "." + "1" + "  -  " + broadcast_address1 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "." + "255" + "." + "254" + "</td> <td>" + broadcast_address1 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "." + broadcast_address3 + "." + broadcast_address4 + "</td> </tr>";
+
+		}
+	}
+
+	else if(CIDR >= 1 && CIDR < 8) {
+		for(var i=1, j=0; i<cal_subnet+1; i++, j += countZero) {
 			cidr_array[i-1] = j; 		
 		}
 	
-		for(var i=0; cidr_array[i]<255; i++) {
-			result += cidr_array[i] + "." + "0" + "." + "0" + "." + "0" + "<br></br>";
+		var diffSubnet = cidr_array[1] - cidr_array[0];
+		first_broadcast_address = findInitialBroadcastAddress(broadcast_address1, diffSubnet);
+
+		for(var i=0; i<cal_subnet; i++) {
+			//result += cidr_array[i] + "." + "0" + "." + "0" + "." + "0" + "<br></br>";
+			result += "<tr> <td>" + cidr_array[i] + "." + "0" + "." + "0" + "." + "0" + "</td> <td>" +
+			cidr_array[i] + "." + "0" + "." + "0" + "." + "1" + "  -  " + ((first_broadcast_address-0)+cidr_array[i]) + "." + "255" + "." + "255" + "." + "254" + "</td> <td>" + ((first_broadcast_address-0)+cidr_array[i]) + "." + broadcast_address2 + "." + broadcast_address3 + "." + "255" + "</td> </tr>";
 		}
-	}*/
-
-	document.getElementById("all_display").innerHTML = result ;
-}
-
-function generateNetworkTable() {
-	var network_range = "";
-
-	for (var i = 0; i < 32;  i++) {
-		network_range += "<span value=" + i + "> " + i + "." + i + "." + i + "." + i +  " </span>";
 	}
-}
 
+	document.getElementById("all_display").innerHTML = result;
+}
 
 function activateResult() {
 
@@ -673,7 +706,6 @@ function activateResult() {
 	//IP type? Public : Private
 	var ip_type = checkIpType(ip_address1);
 
-	generateNetworkRange(ip_address_full, cidr, number_of_all_host);
 
 	var network_address_usable = network_address1 + "." + network_address2 + "." + network_address3 + "." + (network_address4+1);
 	var broadcast_address_usable = broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + (broadcast_address4-1);
@@ -682,7 +714,7 @@ function activateResult() {
 	document.getElementById("all_network_display").innerHTML = checkAllPossibleNetworkDisplay(cidr, ip_address_full);
 
 	//document.getElementById("class_display").innerHTML = cutSubnetUsingDelimiter(subnet_mask, 0, ' ');
-	document.getElementById("class_display").innerHTML = subnet_mask;
+	//document.getElementById("class_display").innerHTML = subnet_mask;
 
 	document.getElementById("ip_address_full_display").innerHTML = ip_address_full;
 	document.getElementById("network_address_display").innerHTML = network_address_full;
@@ -702,20 +734,13 @@ function activateResult() {
 	document.getElementById("integerID_display").innerHTML = integerID.toLocaleString();
 	document.getElementById("hexa_ID_display").innerHTML = "0x" + hexaID;
 
-	document.getElementById("first-column").innerHTML = network_address_full;
-	document.getElementById("last-column").innerHTML = broadcast_address_full;
+	//document.getElementById("first-column").innerHTML = network_address_full;
+	//document.getElementById("last-column").innerHTML = broadcast_address_full;
 
-	//document.getElementById("all_display").innerHTML = cutDot(ip_address_full);
-
-	//Table
-	var number_of_host_per_subnet = calculateNumberOfHost(cidr);
-	//calculateNetworkTable(number_of_host_per_subnet, );
-	//document.getElementById("network_table_display").innerHTML = generateTable();
-	document.getElementById("network_table_display").innerHTML = number_of_host_per_subnet;
+	//document.getElementById("all_display").innerHTML = cutDot(ip_address_full);	
+	generateNetworkRange(ip_address_full, cidr, number_of_all_host, broadcast_address_full);
 
 }
-
-generateNetworkTable();
 
 </script>
 </html>
