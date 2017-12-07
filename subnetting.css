@@ -1,7 +1,6 @@
 span-head {
   font-family: 'Ubuntu';
 	font-weight: bold;
-	width: auto;
 }
 
 span-value {
@@ -14,7 +13,43 @@ span-input, input {
 	font-family: ' Spectral SC';
 }
 
-table, th, td, tr {
+table, th, td {
     border: 1px solid black;
-    width: auto;
+}
+
+form {
+  border : 1px solid #000;
+  padding : 5px;
+}
+
+
+#ip_address1, #ip_address2, #ip_address3, #ip_address4 {
+	/*line-height: 28px;*/
+	height: 40px;
+	/*width: 200px;*/
+	font-size: 40px;
+	border: 1px solid black;
+
+}
+
+/*Button-CSS--retrieve from: https://stackoverflow.com/questions/2564084/how-do-i-get-the-same-buttons-as-youtube*/
+
+button {
+		height:2.0833em;
+    border:1px solid #ccc;
+    background:#f6f6f6;
+    background-image:0;
+    filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#ffffff,endColorStr=#efefef);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Gradient(startColorStr=#FFFFFF, endColorStr=#EFEFEF)";
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    white-space:nowrap;
+    vertical-align:middle;
+    cursor:pointer;
+    overflow:visible;
+    padding:0 .5em;
+    width: 30%;
+    height: 50px;
+    position: center;
 }

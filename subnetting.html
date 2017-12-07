@@ -8,30 +8,34 @@
 	<link rel="stylesheet" type="text/css" href="subnetting.css">
 </head>
 
-<img src="https://pirun.ku.ac.th/~b5810504388/under_construction.png"></img>
+<img src="https://pirun.ku.ac.th/~b5810504388/IPv4.png"></img>
 
 <h1>This is IP Address Subnetting Calculator</h1>
 
 <hr>
 
 <br></br>
+<form action>
 <span-input style="font-size:40px"> Network Class : </span-input>
-<td><label for="cclass0"><input type="radio" name="cclass" id="cclass0" value="any" onClick="selectAny();"/>Any</label>
-	&nbsp; <label for="cclass1"><input type="radio" name="cclass" id="cclass1" value="a" onClick="selectA();"/>A</label>
-	&nbsp; <label for="cclass2"><input type="radio" name="cclass" id="cclass2" value="b" onClick="selectB();"/>B</label>
-	&nbsp; <label for="cclass3"><input type="radio" name="cclass" id="cclass3" value="c" onClick="selectC();"/>C</label></td>
+<td><label for="cclass0"><input type="radio" name="cclass" id="cclass0" value="any" onClick="selectAny();" style="height: 2em; width: 5%; border: 1px solid black;"/>Any</label>
+	&nbsp; <label for="cclass1"><input type="radio" name="cclass" id="cclass1" value="a" onClick="selectA();" style="height: 2em; width: 5%; border: 1px solid black;"/>A</label>
+	&nbsp; <label for="cclass2" style="height: 2em; width: 5%;"><input type="radio" name="cclass" id="cclass2" value="b" onClick="selectB();" style="height: 2em; width: 5%; border: 1px solid black;"/>B</label>
+	&nbsp; <label for="cclass3"><input type="radio" name="cclass" id="cclass3" value="c" onClick="selectC();" style="height: 2em; width: 5%; border: 1px solid black;"/>C</label></td>
 
 <br></br>
 
-<span-input style="font-size:40px"><form action>IP Address : <input type="text" id="ip_address1" maxlength="3" style="width:30px" style="font-size:40px"> . <input type="text" id="ip_address2" maxlength="3" style="width:30px"> . <input type="text" id="ip_address3" maxlength="3" style="width:30px"> . <input type="text" id="ip_address4" maxlength="3" style="width:30px"></input></form></span-input>
+<span-input style="font-size:40px">IP Address : <input type="text" id="ip_address1" maxlength="3" style="width: 80px" onchange="checkInput();">   . <input type="text" id="ip_address2" maxlength="3" style="width: 80px" onchange="checkInput();"> . <input type="text" id="ip_address3" maxlength="3" style="width: 80px" onchange="checkInput();"> . <input type="text" id="ip_address4" maxlength="3" style="width: 80px" onchange="checkInput();"></input></span-input>
 
-<span-input style="font-size:40px"> Subnet Select : </span-input>
-<td><select name="csubnet" id="csubnet"></select></td>
-
-<br></br>
+<span id="error_input_display" style="color: red"></span>
 <br></br>
 
-<input type="submit" onClick="activateResult();" value="Calculate"></input>
+<span-input style="font-size:40px;"> Subnet Select : </span-input>
+<td><select name="csubnet" id="csubnet" style="font-size:30px; height:40px; width: 30%;"></select></td>
+</form>
+
+<br></br>
+
+<button style="text-align: center" onClick="activateResult();" value="Calculate">Calculate!</button>
 <br></br>
 <br></br>
 <br></br>
@@ -85,7 +89,7 @@
 <br></br>
 
 <div>
-<span-head style="font-size:40px" color=""> Wildcard Mask : <span-value id="wildcard_mask_display" style="font-size:40px"></span-value></span-head>
+<span-head style="font-size:40px" color=""> Wildcard Mask :     <span-value id="wildcard_mask_display" style="font-size:40px"></span-value></span-head>
 </div>
 
 <br></br>
@@ -147,7 +151,7 @@
 <span style="font-size:40px"><span id="all_network_display"></span></span>
 <br></br>
 
-<span style="font-size:40px"><span></span></span>
+<span style="font-size:40px" id="number_of_host_display"><span></span></span>
 <br></br>
 
 <table style="width: 80%">
@@ -169,7 +173,7 @@
 
 
 <div>
-<span style="font-size:20px"> กลับบ้าน   <font size="2"><strong><a href="https://pirun.ku.ac.th/~b5810504388/"> CLICK! </a></strong></font></span>
+<span style="font-size:10px"> กลับบ้าน   <font size="2"><strong><a href="https://pirun.ku.ac.th/~b5810504388/"> CLICK! </a></strong></font></span>
 </div>
 
 <!--End Display-->
@@ -247,20 +251,6 @@ function cutSubnetUsingDelimiter(ID, position, delimiter) {
 	return result;
 }
 
-//code of "function convertHexToDec" from stackoverflow
-function convertHexToDec(hex) {
-  var result = 0;
-	var digit;
-    hex = hex.toLowerCase();
-
-    for (var i = 0; i < hex.length; i++) {
-        digit = '0123456789abcdefgh'.indexOf(hex[i]);
-        result = result * 16 + digit;
-    }
-
-    return result;
-}
-
 function convertToBinary(decimal) {
 	var result = 0;
 	var rem;
@@ -275,19 +265,6 @@ function convertToBinary(decimal) {
 	return result;
 }
 
-
-function convertBinaryToHexa(hex) {
-	var bytes = [];
-	var result;
-
-	for(var i=0; i<hex.length; i++) {
-		bytes.push(parseInt(hex.substr(i, 2), 16));
-	}
-
-	result = String.fromCharCode.apply(String, bytes);
-
-	return result;
-}
 //"fillZero" function was retrieve from...https://stackoverflow.com/questions/1267283/how-can-i-pad-a-value-with-leading-zeros
 function fillZero(binaryID, width) {
 	width = width - binaryID.toString().length;
@@ -345,6 +322,31 @@ function calculateNetworkHostPerSubnet(cidr) {
 	return number_of_all_host_per_subnet;
 }
 
+function numberOfAllPossibleHost(cidr) {
+	var number_of_subnet_bit = 0;
+	var number_of_subnet_host = 0;
+	var number_of_host_per_subnet = 0;
+
+	if(cidr <= 8) {
+		number_of_subnet_bit = cidr;
+	}
+
+	else if(cidr <= 16 && cidr > 8) {
+		number_of_subnet_bit = cidr - 8;
+	}
+
+	else if(cidr <= 24 && cidr > 16) {
+		number_of_subnet_bit = cidr - 16;	
+	}
+
+	else if(cidr <= 32 && cidr > 24) {
+		number_of_subnet_bit = cidr - 24;
+	}
+
+	number_of_all_host_per_subnet = (2**(32-cidr));
+
+	return number_of_all_host_per_subnet;
+}
 function calculateSubnet(cidr) {
 	var result = 0;
 
@@ -537,7 +539,7 @@ function generateNetworkRange(ip_address_full, CIDR, number_of_all_host, broadca
 
 		for(var i=0; i<cal_subnet; i++) {
 			result += "<tr> <td>" + ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + cidr_array[i] + "</td> <td>" +
-			ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + (cidr_array[i]+1) + "  -  " + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "</td> <td>" + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "</td> </tr>";
+			ip_address1 + "." + ip_address2 + "." + ip_address3 + "." + (cidr_array[i]+1) + "  -  " + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-1)+cidr_array[i]) + "</td> <td>" + broadcast_address1 + "." + broadcast_address2 + "." + broadcast_address3 + "." + ((first_broadcast_address-0)+cidr_array[i]) + "</td> </tr>";
 		}
 	}
 
@@ -664,40 +666,22 @@ function activateResult() {
 
 	var binaryID = binaryID1 + "." + binaryID2 + "." + binaryID3 + "." + binaryID4;
 
-	//Hexadecimal ID
-	var hexaID1 = convertToHexa(ip_address1);
-	var hexaID2 = convertToHexa(ip_address2);
-	var hexaID3 = convertToHexa(ip_address3);
-	var hexaID4 = convertToHexa(ip_address4);
+	var binaryID1_noZero = parseInt(ip_address1, 10).toString(2);
+	var binaryID2_noZero = parseInt(ip_address2, 10).toString(2);
+	var binaryID3_noZero = parseInt(ip_address3, 10).toString(2);
+	var binaryID4_noZero = parseInt(ip_address4, 10).toString(2);
 
-	var hexaID = hexaID1 + hexaID2 + hexaID3 + hexaID4;
 
 	//Integer ID
-	var integerID = parseInt("0x" + hexaID);
+	var integerID1 = ip_address1 * (256**3);
+	var integerID2 = ip_address2 * (256**2);
+	var integerID3 = ip_address3 * (256**1);
+	var integerID4 = ip_address4 * (256**0);
 
+	var integerID = integerID1 + integerID2 + integerID3 + integerID4;
 
-	//Test find All Host using convertion to Decimal
-	//First, convert Network Address
-	var networkAddressHexa1 = convertToHexa(network_address1);
-	var networkAddressHexa2 = convertToHexa(network_address2);
-	var networkAddressHexa3 = convertToHexa(network_address3);
-	var networkAddressHexa4 = convertToHexa(network_address4);
-
-	var networkAddressHexa = networkAddressHexa1 + networkAddressHexa2 + networkAddressHexa3 + networkAddressHexa4;
-
-	var networkAddressInteger = convertHexToDec(networkAddressHexa);
-	//End First
-
-	//Second, convert Broadcast Address
-	var broadcastAddressHexa1 = convertToHexa(broadcast_address1);
-	var broadcastAddressHexa2 = convertToHexa(broadcast_address2);
-	var broadcastAddressHexa3 = convertToHexa(broadcast_address3);
-	var broadcastAddressHexa4 = convertToHexa(broadcast_address4);
-
-	var broadcastAddressHexa = broadcastAddressHexa1 + broadcastAddressHexa2 + broadcastAddressHexa3 + broadcastAddressHexa4;
-
-	var broadcastAddressInteger = convertHexToDec(broadcastAddressHexa);
-	//End Second
+	//Hexadecimal ID
+	var hexaID = parseInt(integerID, 10).toString(16);
 
 	//All Host and Number of Usable Host & Range
 	var number_of_all_host = calculateNetworkHostPerSubnet(cidr);
@@ -722,7 +706,7 @@ function activateResult() {
 	document.getElementById("broadcast_address_display").innerHTML = broadcast_address_full;
 	document.getElementById("all_host_display").innerHTML = number_of_all_host.toLocaleString();
 	document.getElementById("usable_host_display").innerHTML = usable_host? (number_of_all_host-2).toLocaleString() : 0;
-	document.getElementById("subnet_mask_display").innerHTML = subnet_mask_show_value;
+	document.getElementById("subnet_mask_display").innerHTML = "               " +subnet_mask_show_value;
 	document.getElementById("binary_subnet_mask_display").innerHTML = binary_subnet_mask;
 	document.getElementById("wildcard_mask_display").innerHTML = wildcard_mask;
 	document.getElementById("cidr_notation_display").innerHTML = "/" + cidr;
@@ -733,13 +717,21 @@ function activateResult() {
 	document.getElementById("binary_ID_display").innerHTML = binaryID;
 	document.getElementById("integerID_display").innerHTML = integerID.toLocaleString();
 	document.getElementById("hexa_ID_display").innerHTML = "0x" + hexaID;
+	document.getElementById("number_of_host_display").innerHTML = "Count All Possible Network :" + numberOfAllPossibleHost(cidr);
 
-	//document.getElementById("first-column").innerHTML = network_address_full;
-	//document.getElementById("last-column").innerHTML = broadcast_address_full;
-
-	//document.getElementById("all_display").innerHTML = cutDot(ip_address_full);	
 	generateNetworkRange(ip_address_full, cidr, number_of_all_host, broadcast_address_full);
 
+}
+
+function checkInput() {
+	var ip_address1 = document.getElementById("ip_address1").value;
+	var ip_address2 = document.getElementById("ip_address2").value;
+	var ip_address3 = document.getElementById("ip_address3").value;
+	var ip_address4 = document.getElementById("ip_address4").value;
+
+	if(ip_address1 < 0 || ip_address2 < 0 || ip_address3 < 0 || ip_address4 < 0 || ip_address1 > 255 || ip_address2 > 255 || ip_address3 > 255 || ip_address4 > 255) {
+		document.getElementById("error_input_display").innerHTML = "INCORRECT IP ADDRESS!!";
+	}
 }
 
 </script>
